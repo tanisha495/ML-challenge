@@ -92,6 +92,8 @@ def build_pair_features(
             "address_tfidf_score": float(getattr(row, "address_tfidf_score", 0.0)),
             "combined_tfidf_score": float(getattr(row, "combined_tfidf_score", 0.0)),
             "token_score": float(getattr(row, "token_score", 0.0)),
+            "keyed_score": float(getattr(row, "keyed_score", 0.0)),
+            "keyed_rank": float(getattr(row, "keyed_rank", 9999)),
             "name_jaccard": _jaccard(s1_name_tokens, c_name_tokens),
             "address_jaccard": _jaccard(s1_addr_tokens, c_addr_tokens),
             "combined_jaccard": _jaccard(token_set(s1_comb), token_set(c_comb)),

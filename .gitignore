@@ -3,3 +3,8 @@ artifacts*/
 __pycache__/
 *.pyc
 .DS_Store
+student_resource/dataset/
+output_final_v2/
+output_final_CRASHED_partial_DO_NOT_USE/
+output_smoketest*/
+*.zip

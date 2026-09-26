@@ -7,7 +7,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from ber.blocking import build_union_candidates, candidate_mapping
+import joblib
+
+from ber.blocking import candidate_mapping
+from ber.keyed_blocking import build_keyed_union_candidates
 from ber.config import DEFAULT_RESOURCE_DIR, BlockingConfig, Paths, TrainingConfig
 from ber.decision import tune_decision_rule
 from ber.features import build_pair_features
@@ -223,7 +226,7 @@ def run_train_validation(
     audits: dict[str, dict[str, float]] = {}
     for name, frame in split_frames.items():
         print(f"Building union candidates for {name}...")
-        cand = build_union_candidates(frame, targets_norm, blocking_config)
+        cand = build_keyed_union_candidates(frame, targets_norm, blocking_config)
         candidates[name] = cand
         audits[name] = blocking_audit(candidate_mapping(cand), truths, frame["entity_id"].tolist())
         cand.to_parquet(paths.cache_dir / f"{name}_candidates.parquet", index=False)
@@ -283,6 +286,11 @@ def run_train_validation(
     _write_predictions(paths.output_dir / "validation_predictions.tsv", holdout_predictions)
     tune_scored.to_parquet(paths.output_dir / "tune_scored_pairs.parquet", index=False)
     holdout_scored.to_parquet(paths.output_dir / "holdout_scored_pairs.parquet", index=False)
+
+    joblib.dump(model, paths.model_dir / "match_model.joblib")
+    decision_rule = {"threshold": threshold, "cap": cap}
+    (paths.model_dir / "decision_rule.json").write_text(json.dumps(decision_rule, indent=2), encoding="utf-8")
+    print(f"Wrote model to {paths.model_dir / 'match_model.joblib'} and decision rule to {paths.model_dir / 'decision_rule.json'}")
 
     metrics: dict[str, object] = {
         "selected_s1": len(selected_ids),

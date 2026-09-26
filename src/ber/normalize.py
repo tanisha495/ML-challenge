@@ -74,6 +74,7 @@ ADDRESS_ABBREVIATIONS = {
 }
 
 STOP_TOKENS = {
+    # English
     "the",
     "and",
     "of",
@@ -90,6 +91,30 @@ STOP_TOKENS = {
     "na",
     "n",
     "no",
+    # French (test set includes France, unseen in training; these are generic
+    # function words that otherwise survive normalization as "content" tokens
+    # and inflate token-overlap/Jaccard similarity between unrelated French
+    # businesses that merely share common articles/prepositions)
+    "le",
+    "la",
+    "les",
+    "l",
+    "de",
+    "du",
+    "des",
+    "un",
+    "une",
+    "et",
+    "a",
+    "au",
+    "aux",
+    "en",
+    "sur",
+    "dans",
+    "pour",
+    "par",
+    "avec",
+    "chez",
 }
 
 LANDMARK_TOKENS = {"near", "opp", "opposite", "behind", "beside", "next", "front"}
