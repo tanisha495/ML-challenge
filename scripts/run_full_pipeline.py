@@ -22,7 +22,7 @@ import time
 from collections import Counter
 from pathlib import Path
 
-REPO = Path("/app")
+REPO = Path("/Users/uniteditservices/Desktop/ML-challenge")
 OUTPUT_DIR = REPO / "output_final_v2"
 LOG_PATH = OUTPUT_DIR / "RUN_LOG.md"
 TEST_DIR = REPO / "student_resource" / "dataset" / "test"
@@ -30,7 +30,7 @@ VENV_PYTHON = REPO / ".venv" / "bin" / "python"
 
 COUNTRIES = [
     # (normalized_country, raw_country_value, threshold_override, cap_override)
-    ("france", "France", None, None),
+    ("france", "France", "0.95", "8"),
     ("india", "India", None, None),
     ("us", "US", None, None),
 ]
